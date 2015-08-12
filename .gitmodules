@@ -1,0 +1,3 @@
+[submodule "bash_lib"]
+	path = bash_lib
+	url = https://github.com/cclhsu/bash_lib.git
