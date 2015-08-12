@@ -26,10 +26,29 @@ AUTHOR=clark_hsu
 VERSION=0.0.1
 
 #******************************************************************************
+echo "================================================================================"
 #echo "Begin: $(basename $0)"
 #set -e # Exit on error On
 #set -x # Trace On
 #******************************************************************************
+# Load Helper Function
+
+TOP_DIR=$(cd $(dirname "$0") && pwd)
+if [ -e "${TOP_DIR}/bash_lib" ]; then
+    source ${TOP_DIR}/bash_lib/functions.sh
+elif  [ -e "${TOP_DIR}/../bash_lib" ]; then
+    source ${TOP_DIR}/../bash_lib/functions.sh
+else
+    source ${TOP_DIR}/functions.sh
+fi
+
+#******************************************************************************
+# Design for Root Only
+
+check_if_root_user
+
+#******************************************************************************
+# Usage & Version
 
 usage()
 {
@@ -64,6 +83,7 @@ exit 1
 }
 
 #******************************************************************************
+# Command Line Parameters
 
 PARAMETERS="$@"
 while [[ $# > 0 ]]
@@ -110,30 +130,14 @@ if [ $# == 0 ]; then
 fi
 
 #******************************************************************************
-# Design for Root Only
-
-if [[ ${UID} -ne 0 ]]; then
-    echo "[Warning] This script was designed for root user.  Please rerun the script as root user!"
-    exit 1
-fi
-
-#******************************************************************************
 # Required User Actions
 
 
 #******************************************************************************
 # Source
 
-CMD_DIR=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
-TOP_DIR=$(cd $(dirname "$0") && pwd)
-source ${TOP_DIR}/setup.conf
-
-if [ -e "${TOP_DIR}/bash_lib" ]; then
-    source ${TOP_DIR}/bash_lib/functions.sh
-elif  [ -e "${TOP_DIR}/../bash_lib" ]; then
-    source ${TOP_DIR}/../bash_lib/functions.sh
-else
-    source ${TOP_DIR}/functions.sh
+if [ -e "${TOP_DIR}/setup.conf" ]; then
+	source ${TOP_DIR}/setup.conf
 fi
 
 #******************************************************************************
@@ -141,6 +145,9 @@ fi
 
 #******************************************************************************
 # Prerequisites
+
+#******************************************************************************
+# Selection Parameters
 
 #******************************************************************************
 # Main Program
@@ -161,5 +168,7 @@ fi
 #set +e # Exit on error Off
 #set +x # Trace Off
 #echo "End: $(basename $0)"
+echo "================================================================================"
 exit 0
 #******************************************************************************
+
