@@ -35,9 +35,9 @@ echo "==========================================================================
 
 TOP_DIR=$(cd $(dirname "$0") && pwd)
 if [ -e "${TOP_DIR}/bash_lib" ]; then
-    source ${TOP_DIR}/bash_lib/functions.sh
+    source ${TOP_DIR}/functions.sh
 elif  [ -e "${TOP_DIR}/../bash_lib" ]; then
-    source ${TOP_DIR}/../bash_lib/functions.sh
+    source ${TOP_DIR}/../functions.sh
 else
     source ${TOP_DIR}/functions.sh
 fi
